@@ -1,0 +1,1060 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Security+ SY0-701 Domain 2 Study Page — Threats, Vulnerabilities, and Mitigations</title>
+<style>
+:root {
+  --bg: #07111f;
+  --panel: #0c1829;
+  --panel2: #101f33;
+  --text: #e9f1ff;
+  --muted: #a9b8d0;
+  --accent: #4db8ff;
+  --accent2: #7cdb9b;
+  --warning: #ffd166;
+  --danger: #ff6b6b;
+  --border: rgba(255,255,255,.12);
+  --shadow: 0 18px 45px rgba(0,0,0,.35);
+  --code: #13243b;
+}
+body.light {
+  --bg: #f7fbff;
+  --panel: #ffffff;
+  --panel2: #eef6ff;
+  --text: #102033;
+  --muted: #52657d;
+  --accent: #0369a1;
+  --accent2: #047857;
+  --warning: #a16207;
+  --danger: #b91c1c;
+  --border: rgba(0,0,0,.12);
+  --shadow: 0 12px 25px rgba(16,32,51,.12);
+  --code: #edf4fb;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at 20% -10%, rgba(77,184,255,.22), transparent 35%),
+              radial-gradient(circle at 80% 10%, rgba(124,219,155,.16), transparent 30%),
+              var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.layout {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-height: 100vh;
+}
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  padding: 22px 18px;
+  border-right: 1px solid var(--border);
+  background: rgba(7,17,31,.86);
+  backdrop-filter: blur(16px);
+}
+.light .sidebar { background: rgba(255,255,255,.88); }
+.brand {
+  display:flex; gap: 12px; align-items:center; margin-bottom: 18px;
+}
+.logo {
+  width: 42px; height:42px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  display:grid; place-items:center; color:#001423; font-weight:900;
+  box-shadow: var(--shadow);
+}
+.brand h1 { font-size: 16px; margin:0; line-height:1.2; }
+.brand p { margin:.25rem 0 0; color:var(--muted); font-size:12px; }
+.controls { display:grid; gap:10px; margin:16px 0 20px; }
+.search {
+  width:100%; padding:11px 12px; border-radius:12px; border:1px solid var(--border);
+  background: var(--panel2); color: var(--text); outline: none;
+}
+.btn {
+  border: 1px solid var(--border); color: var(--text); background: var(--panel2);
+  padding: 10px 12px; border-radius: 12px; cursor:pointer; font-weight:700;
+}
+.btn:hover { border-color: var(--accent); }
+.nav-group { margin: 18px 0; }
+.nav-group h2 {
+  margin: 0 0 8px; font-size: 12px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .12em;
+}
+.nav-group a {
+  display:block; padding: 8px 10px; border-radius: 10px; color: var(--text); font-size: 14px;
+}
+.nav-group a:hover { background: var(--panel2); text-decoration: none; }
+.progress-wrap {
+  margin-top: 18px; background: var(--panel2); border:1px solid var(--border);
+  border-radius: 999px; overflow:hidden; height: 9px;
+}
+.progress { height:100%; width:0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); }
+main { padding: 0 0 80px; }
+.hero {
+  padding: 54px min(6vw, 72px) 36px;
+  border-bottom:1px solid var(--border);
+}
+.hero .eyebrow { color: var(--accent2); font-weight:800; letter-spacing:.1em; text-transform:uppercase; font-size:13px; }
+.hero h1 {
+  font-size: clamp(34px, 5vw, 64px);
+  line-height:1.02; margin: 12px 0 16px; max-width: 1080px;
+}
+.hero p { color: var(--muted); font-size: 18px; max-width: 980px; }
+.hero-grid {
+  display:grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap:14px; margin-top:28px;
+}
+.stat {
+  background: var(--panel); border:1px solid var(--border); border-radius: 18px; padding:16px;
+  box-shadow: var(--shadow);
+}
+.stat strong { display:block; font-size: 24px; color: var(--accent); }
+.stat span { color: var(--muted); font-size: 13px; }
+.section {
+  padding: 42px min(6vw, 72px);
+  border-bottom: 1px solid var(--border);
+}
+.section h2 {
+  font-size: clamp(26px, 3vw, 40px); margin: 0 0 14px; line-height:1.1;
+}
+.section > p.lede { color:var(--muted); font-size:17px; max-width: 980px; }
+.notice {
+  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(77,184,255,.14), rgba(124,219,155,.08));
+  padding: 18px; border-radius: 18px; margin: 20px 0;
+}
+.grid {
+  display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap:16px; margin-top:22px;
+}
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.card, .quiz-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+.card h3, .quiz-card h3 { margin: 0 0 8px; font-size: 20px; }
+.card p { margin: 10px 0; }
+.tags { display:flex; flex-wrap:wrap; gap:8px; margin: 8px 0 12px; }
+.pill {
+  display:inline-flex; align-items:center; gap: 6px;
+  border:1px solid var(--border); border-radius:999px; padding: 4px 9px;
+  color: var(--muted); font-size: 12px; background: rgba(255,255,255,.03);
+}
+.meta { color: var(--muted); font-size: 13px; }
+.flow {
+  display:grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap:12px; margin: 22px 0;
+}
+.flow .step {
+  background: var(--panel); border:1px solid var(--border); padding:16px; border-radius:18px;
+  position:relative;
+}
+.flow .step strong { color: var(--accent2); display:block; font-size: 15px; margin-bottom: 6px; }
+.table-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:18px; margin-top:22px; }
+table { width:100%; border-collapse: collapse; background: var(--panel); }
+th, td { text-align:left; border-bottom: 1px solid var(--border); padding: 13px 14px; vertical-align:top; }
+th { color: var(--accent2); background: var(--panel2); position: sticky; top:0; }
+tr:last-child td { border-bottom: none; }
+.callout {
+  border-left: 4px solid var(--accent);
+  background: var(--panel2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin: 18px 0;
+}
+.warning { border-left-color: var(--warning); }
+.danger { border-left-color: var(--danger); }
+.kbd {
+  display:inline-block; border:1px solid var(--border); border-bottom-width:3px;
+  padding: 1px 7px; border-radius: 6px; background:var(--code); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .9em;
+}
+.source-line { color: var(--muted); font-size: 14px; }
+.source-pill {
+  display:inline-block; color: var(--bg); background: var(--accent2);
+  padding: 2px 8px; border-radius:999px; font-weight:800; font-size: 12px;
+}
+.checklist {
+  display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px;
+}
+.checkitem {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 14px;
+}
+.checkitem strong { color: var(--accent2); }
+.choices { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; margin:12px 0; }
+.choice {
+  text-align:left; border:1px solid var(--border); background: var(--panel2); color: var(--text);
+  padding: 12px; border-radius: 12px; cursor:pointer;
+}
+.choice.correct { border-color: var(--accent2); background: rgba(124,219,155,.18); }
+.choice.wrong { border-color: var(--danger); background: rgba(255,107,107,.14); }
+.explanation { display:none; color: var(--muted); }
+.ref-list { columns: 2; column-gap: 36px; }
+.ref-list li { break-inside: avoid; margin: 0 0 14px; }
+.ref-list span { display:block; color: var(--muted); font-size: 14px; }
+.hidden { display:none !important; }
+.footer-note { color:var(--muted); font-size:14px; }
+@media (max-width: 980px) {
+  .layout { grid-template-columns: 1fr; }
+  .sidebar { position:relative; height:auto; }
+  .hero-grid, .grid.three, .flow { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .hero, .section { padding-left: 18px; padding-right: 18px; }
+  .hero-grid, .grid, .grid.three, .flow, .checklist, .choices { grid-template-columns: 1fr; }
+}
+@media print {
+  .sidebar, .controls, .btn { display:none; }
+  .layout { display:block; }
+  body { background:#fff; color:#111; }
+  .section, .hero { padding: 24px; }
+  .card, .quiz-card, .stat { box-shadow:none; break-inside: avoid; }
+  a { color:#0645ad; }
+}
+</style>
+</head>
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">S+</div>
+      <div>
+        <h1>Security+ Domain 2</h1>
+        <p>Threats • Vulnerabilities • Mitigations</p>
+      </div>
+    </div>
+    <div class="controls">
+      <input class="search" id="search" placeholder="Search this page: SQLi, DDoS, zero-day...">
+      <button class="btn" id="themeBtn">Toggle light/dark</button>
+      <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+    </div>
+    <nav>
+      <div class="nav-group">
+        <h2>Start</h2>
+        <a href="#overview">Overview mental model</a>
+        <a href="#oneday">One-day plan</a>
+      </div>
+      <div class="nav-group">
+        <h2>2.1 Threat Actors</h2>
+        <a href="#actors">Actors and motivations</a>
+      </div>
+      <div class="nav-group">
+        <h2>2.2 Vectors</h2>
+        <a href="#vectors">Threat vectors and attack surfaces</a>
+      </div>
+      <div class="nav-group">
+        <h2>2.3 Vulnerabilities</h2>
+        <a href="#vulnerabilities">Types of vulnerabilities</a>
+      </div>
+      <div class="nav-group">
+        <h2>2.4 Malicious Activity</h2>
+        <a href="#malware">Malware indicators</a>
+        <a href="#attacks">Physical, network, app, crypto, password attacks</a>
+        <a href="#iocs">Indicators of compromise</a>
+      </div>
+      <div class="nav-group">
+        <h2>2.5 Mitigation</h2>
+        <a href="#mitigations">Mitigation techniques</a>
+        <a href="#hardening">Hardening map</a>
+      </div>
+      <div class="nav-group">
+        <h2>Review</h2>
+        <a href="#cases">Real-world cases</a>
+        <a href="#traps">Exam traps</a>
+        <a href="#quiz">Practice questions</a>
+        <a href="#sources">Sources</a>
+        <a href="#github">Host on GitHub Pages</a>
+      </div>
+    </nav>
+    <div class="progress-wrap"><div class="progress" id="progress"></div></div>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <div class="eyebrow">CompTIA Security+ SY0-701 • Domain 2</div>
+      <h1>Threats, Vulnerabilities, and Mitigations — single-page deep study guide</h1>
+      <p>This page is built to help you understand the whole Security+ Domain 2 module in one focused day. It uses the official objective structure, then adds plain-English explanations, real-life cyber examples, indicators, and defensive controls.</p>
+      <div class="hero-grid">
+        <div class="stat"><strong>22%</strong><span>of the SY0-701 exam domain weighting</span></div>
+        <div class="stat"><strong>2.1–2.5</strong><span>actors, vectors, vulnerabilities, indicators, mitigations</span></div>
+        <div class="stat"><strong>7</strong><span>real-world case studies mapped to concepts</span></div>
+        <div class="stat"><strong>20</strong><span>quick practice questions with explanations</span></div>
+      </div>
+    </header>
+
+    <section id="overview" class="section searchable">
+      <h2>First understand the mental model</h2>
+      <p class="lede">Security+ Domain 2 becomes easy when you connect every question to the same chain: <strong>who attacks, how they enter, what weakness they abuse, what evidence appears, and what control reduces the risk.</strong></p>
+      <div class="flow">
+        <div class="step"><strong>1. Actor</strong>Who is behind it? Nation-state, criminal group, insider, hacktivist, unskilled attacker, or shadow IT.</div>
+        <div class="step"><strong>2. Motivation</strong>Why? Money, espionage, revenge, political belief, blackmail, disruption, war, or convenience.</div>
+        <div class="step"><strong>3. Vector</strong>How do they reach the target? Email, SMS, vulnerable app, open port, vendor, Wi-Fi, USB, voice call.</div>
+        <div class="step"><strong>4. Vulnerability</strong>What weakness makes it work? Misconfiguration, SQLi, XSS, zero-day, default password, legacy system.</div>
+        <div class="step"><strong>5. Indicator + mitigation</strong>What shows up and what control helps? Logs, lockouts, resource spikes, segmentation, MFA, patching, monitoring.</div>
+      </div>
+      <div class="notice">
+        <strong>Exam mindset:</strong> read scenario words carefully. “One password attempted across many accounts” = password spraying. “Many passwords against one account” = brute force. “Victim visits a compromised site they normally trust” = watering hole. “Same user logs in from impossible geography” = indicator, not an attack type.
+      </div>
+      <p class="source-line">Built against the official SY0-701 Domain 2 outline <a class="source-pill" href="#src1">source</a> and aligned to defensive models from NIST, MITRE ATT&CK, OWASP, CISA, CIS, and NVD.</p>
+    </section>
+
+    <section id="oneday" class="section searchable">
+      <h2>One-day study plan</h2>
+      <p class="lede">Use this if you need to cover the entire module fast. The goal is not to memorize every word; the goal is to recognize scenario patterns.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Time block</th><th>Focus</th><th>Output</th></tr></thead>
+          <tbody>
+            <tr><td>00:00–00:30</td><td>Read the mental model and official Domain 2 scope.</td><td>Write the chain: actor → vector → vulnerability → indicator → mitigation.</td></tr>
+            <tr><td>00:30–01:30</td><td>Threat actors and motivations.</td><td>Make a 6-row actor table from memory.</td></tr>
+            <tr><td>01:30–03:00</td><td>Threat vectors and social engineering.</td><td>Explain phishing, vishing, smishing, BEC, pretexting, watering hole, typosquatting to a beginner.</td></tr>
+            <tr><td>03:00–05:00</td><td>Vulnerabilities: app, OS, web, hardware, virtualization, cloud, supply chain, crypto, misconfig, mobile, zero-day.</td><td>For each, write: root cause, example, mitigation.</td></tr>
+            <tr><td>05:00–06:30</td><td>Malware, physical, network, app, crypto, password attacks and indicators.</td><td>Map each attack to an indicator.</td></tr>
+            <tr><td>06:30–07:30</td><td>Mitigation techniques.</td><td>Map each mitigation to the attack it reduces.</td></tr>
+            <tr><td>07:30–08:00</td><td>Practice questions + review traps.</td><td>Redo missed questions and explain why the wrong answers are wrong.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="actors" class="section searchable">
+      <h2>2.1 — Threat actors and motivations</h2>
+      <p class="lede">A threat actor is the person, group, or process creating risk. The exam wants you to compare actors by <strong>internal/external position, resources, sophistication, and motivation</strong>.</p>
+      <div class="grid three">
+        <article class="card searchable"><h3>Nation-state / APT</h3><div class="tags"><span class="pill">external</span><span class="pill">high funding</span><span class="pill">patient</span></div><div>
+    <p><strong>Meaning:</strong> A government-backed or government-aligned actor with time, tooling, intelligence access, and strategic goals.</p>
+    <p><strong>Motivation:</strong> Espionage, war preparation, influence operations, sabotage, intellectual-property theft.</p>
+    <p><strong>Real-life mental picture:</strong> A supply-chain compromise such as SolarWinds shows why trusted software updates can become a strategic intrusion path.</p>
+    <p><strong>Common signals:</strong> Long dwell time, stealthy persistence, living-off-the-land commands, identity abuse, careful exfiltration.</p>
+    <p><strong>Defensive focus:</strong> Threat intel, EDR/XDR, privileged access management, segmentation, verified software supply chain, detection engineering mapped to ATT&amp;CK.</p>
+    </div></article>
+<article class="card searchable"><h3>Organized crime</h3><div class="tags"><span class="pill">external</span><span class="pill">financial</span><span class="pill">scalable</span></div><div>
+    <p><strong>Meaning:</strong> Professionally run criminal groups, often using ransomware-as-a-service, botnets, credential marketplaces, and affiliate models.</p>
+    <p><strong>Motivation:</strong> Financial gain, blackmail, extortion, resale of access, fraud.</p>
+    <p><strong>Real-life mental picture:</strong> Ransomware incidents such as Colonial Pipeline illustrate how credential abuse and extortion can disrupt real business operations.</p>
+    <p><strong>Common signals:</strong> Phishing, stolen credentials, mass scanning, data staging, ransom notes, unusual encryption activity.</p>
+    <p><strong>Defensive focus:</strong> MFA, tested backups, EDR, email security, egress monitoring, rapid isolation, least privilege, vulnerability prioritization with KEV.</p>
+    </div></article>
+<article class="card searchable"><h3>Hacktivist</h3><div class="tags"><span class="pill">external</span><span class="pill">ideological</span><span class="pill">loud</span></div><div>
+    <p><strong>Meaning:</strong> Actor motivated by political, social, or ideological causes rather than direct profit.</p>
+    <p><strong>Motivation:</strong> Public embarrassment, service disruption, data leaks, attention, protest.</p>
+    <p><strong>Real-life mental picture:</strong> DDoS, website defacement, doxing, and leaked internal chat screenshots are common hacktivist-style outcomes.</p>
+    <p><strong>Common signals:</strong> Public claims of responsibility, coordinated traffic spikes, politically timed targeting, social media amplification.</p>
+    <p><strong>Defensive focus:</strong> DDoS protection, incident communications plan, attack-surface reduction, web hardening, monitoring of brand abuse.</p>
+    </div></article>
+<article class="card searchable"><h3>Insider threat</h3><div class="tags"><span class="pill">internal</span><span class="pill">trusted access</span><span class="pill">hard to notice</span></div><div>
+    <p><strong>Meaning:</strong> A current or former employee, contractor, vendor, or partner who misuses legitimate access accidentally or intentionally.</p>
+    <p><strong>Motivation:</strong> Revenge, financial gain, coercion, negligence, convenience, policy bypass.</p>
+    <p><strong>Real-life mental picture:</strong> A departing employee downloading client lists or a contractor overusing admin rights both count as insider risk.</p>
+    <p><strong>Common signals:</strong> Large exports, off-hours access, access to unrelated projects, unusual USB use, sudden permission changes.</p>
+    <p><strong>Defensive focus:</strong> Least privilege, separation of duties, user behavior analytics, DLP, logging, fast deprovisioning, manager review of access.</p>
+    </div></article>
+<article class="card searchable"><h3>Unskilled attacker / script kiddie</h3><div class="tags"><span class="pill">external</span><span class="pill">low capability</span><span class="pill">opportunistic</span></div><div>
+    <p><strong>Meaning:</strong> An attacker who relies on public tools, leaked credentials, automated scanners, and copied tutorials.</p>
+    <p><strong>Motivation:</strong> Curiosity, bragging rights, chaos, low-effort profit, revenge.</p>
+    <p><strong>Real-life mental picture:</strong> Publicly exposed admin panels with default passwords are common targets because they require little skill.</p>
+    <p><strong>Common signals:</strong> Noisy scans, repeated failed logins, obvious tool user-agents, attacks against old CVEs.</p>
+    <p><strong>Defensive focus:</strong> Patch quickly, remove default credentials, close unused ports, rate-limit auth, monitor internet-facing assets.</p>
+    </div></article>
+<article class="card searchable"><h3>Shadow IT</h3><div class="tags"><span class="pill">internal</span><span class="pill">unapproved tech</span><span class="pill">often accidental</span></div><div>
+    <p><strong>Meaning:</strong> Technology used without formal IT/security approval, such as personal cloud storage, unsanctioned SaaS, unmanaged scripts, or side databases.</p>
+    <p><strong>Motivation:</strong> Convenience, speed, business pressure, lack of awareness; not always malicious.</p>
+    <p><strong>Real-life mental picture:</strong> A team exporting customer data into a personal spreadsheet app creates exposure even if nobody intended harm.</p>
+    <p><strong>Common signals:</strong> Unknown OAuth apps, unsanctioned SaaS traffic, data in unmanaged repositories, duplicate asset inventories.</p>
+    <p><strong>Defensive focus:</strong> SaaS discovery, CASB/SSE, policy, approved alternatives, procurement review, data classification, user education.</p>
+    </div></article>
+      </div>
+      <div class="callout">
+        <strong>Quick memory:</strong> Nation-state = patience and espionage. Organized crime = money and extortion. Hacktivist = ideology and attention. Insider = trusted access. Unskilled attacker = public tools. Shadow IT = unapproved technology, often not malicious.
+      </div>
+    </section>
+
+    <section id="vectors" class="section searchable">
+      <h2>2.2 — Threat vectors and attack surfaces</h2>
+      <p class="lede">A threat vector is the path used to attack. An attack surface is the total set of exposed paths. Reducing attack surface means giving attackers fewer ways to interact with your environment.</p>
+      <div class="grid">
+        <article class="card searchable"><h3>Message-based threats: email, SMS, IM</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Attackers use messages because identity trust is easier to abuse than technical controls. Phishing emails, smishing texts, and chat-based pretexts try to make the victim click, approve, install, pay, or disclose. The exam angle is to notice the medium and the requested action.</p>
+    <p><strong>Simple scenario:</strong> Employee receives a fake Microsoft 365 alert, clicks a lookalike login page, and the attacker steals a session token.</p>
+    <p><strong>Controls that make sense:</strong> Email authentication, secure gateways, phishing-resistant MFA, user reporting button, URL rewriting, attachment sandboxing, conditional access.</p>
+    </div></article>
+<article class="card searchable"><h3>Image-based and file-based vectors</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Images and files can carry malicious macros, exploit vulnerable previewers, hide QR links, or trick users with double extensions. The file itself may not be the final payload; it may be a delivery mechanism.</p>
+    <p><strong>Simple scenario:</strong> Invoice.pdf.html opens in a browser and asks for credentials; a QR code in a poster sends users to a fake benefits portal.</p>
+    <p><strong>Controls that make sense:</strong> Block risky attachments, disable macros from the internet, content disarm/reconstruction, file reputation, EDR, training on QR phishing.</p>
+    </div></article>
+<article class="card searchable"><h3>Voice call / vishing</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> The attacker uses a phone call to bypass written evidence and create urgency. Modern vishing often targets help desks, MFA reset processes, and executives.</p>
+    <p><strong>Simple scenario:</strong> Caller pretends to be an employee locked out before a deadline and convinces support to reset MFA.</p>
+    <p><strong>Controls that make sense:</strong> Help-desk identity proofing, callbacks to known numbers, anti-SIM-swap procedures, ticket audit logs, training on urgency scripts.</p>
+    </div></article>
+<article class="card searchable"><h3>Removable device</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> USB drives can be used for malware delivery, data theft, or human curiosity attacks. The real issue is untrusted hardware gaining direct endpoint access.</p>
+    <p><strong>Simple scenario:</strong> A branded USB left in a parking lot is plugged into a workstation and executes a malicious shortcut.</p>
+    <p><strong>Controls that make sense:</strong> Disable autorun, block unknown USB storage, device control, user training, EDR, physical security.</p>
+    </div></article>
+<article class="card searchable"><h3>Vulnerable software</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Software with known or unknown flaws becomes an entry point. Internet-facing apps, VPNs, edge devices, and exposed management interfaces are especially dangerous.</p>
+    <p><strong>Simple scenario:</strong> Attackers exploit an unpatched file-transfer application and steal data before the organization sees a normal patch cycle.</p>
+    <p><strong>Controls that make sense:</strong> Asset inventory, vulnerability scanning, KEV-driven prioritization, patch SLAs, WAF/IPS as compensating control, external attack-surface monitoring.</p>
+    </div></article>
+<article class="card searchable"><h3>Unsupported systems and legacy apps</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Unsupported systems no longer receive normal security updates. Legacy apps may require old libraries, weak ciphers, or unsupported OS versions.</p>
+    <p><strong>Simple scenario:</strong> A production Windows server remains unpatched because a business app breaks on newer versions.</p>
+    <p><strong>Controls that make sense:</strong> Isolate, virtual patch, restrict access, plan replacement, compensating controls, remove from internet, document accepted risk.</p>
+    </div></article>
+<article class="card searchable"><h3>Unsecure networks: wireless, wired, Bluetooth</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> A network becomes a threat vector when attackers can intercept, impersonate, jam, or join it without adequate controls.</p>
+    <p><strong>Simple scenario:</strong> Guest Wi-Fi shares a flat subnet with internal printers and admin interfaces.</p>
+    <p><strong>Controls that make sense:</strong> Network segmentation, WPA3/802.1X, NAC, VPN on untrusted networks, disable unused Bluetooth, rogue AP detection.</p>
+    </div></article>
+<article class="card searchable"><h3>Open service ports</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Every listening service is an attack surface. The issue is not only the port number, but the exposed service, version, authentication, and reachability.</p>
+    <p><strong>Simple scenario:</strong> A forgotten SSH service on a public VM allows password spraying against a local admin account.</p>
+    <p><strong>Controls that make sense:</strong> Close unused services, firewall allow lists, bastion/jump hosts, strong auth, service inventory, exposure scanning.</p>
+    </div></article>
+<article class="card searchable"><h3>Default credentials</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Default passwords convert deployment mistakes into immediate compromise, especially for IoT, routers, cameras, apps, and admin portals.</p>
+    <p><strong>Simple scenario:</strong> Botnet scans find cameras using admin/admin and enroll them into DDoS traffic.</p>
+    <p><strong>Controls that make sense:</strong> Change defaults during build, enforce unique passwords, vendor hardening checklist, block public admin panels.</p>
+    </div></article>
+<article class="card searchable"><h3>Supply chain: MSPs, vendors, suppliers</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> Instead of attacking the final victim directly, attackers compromise software updates, vendors, service providers, dependencies, or hardware sources.</p>
+    <p><strong>Simple scenario:</strong> A trusted vendor update contains malicious code, so customers install the intrusion path themselves.</p>
+    <p><strong>Controls that make sense:</strong> Vendor risk management, SBOM, code signing, update validation, least-privileged vendor access, continuous monitoring, contractual security requirements.</p>
+    </div></article>
+<article class="card searchable"><h3>Phishing, smishing, pretexting, BEC</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> These are human-vector attacks. The attacker creates believable context, then asks for credentials, money, approval, or sensitive data.</p>
+    <p><strong>Simple scenario:</strong> Fake CFO email asks finance to change vendor banking information minutes before payroll cutoff.</p>
+    <p><strong>Controls that make sense:</strong> MFA, payment verification, anti-spoofing controls, domain monitoring, security awareness, separation of duties.</p>
+    </div></article>
+<article class="card searchable"><h3>Watering hole and brand impersonation</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> The attacker compromises or imitates a site the victim group naturally visits. The victim comes to the attacker instead of receiving a direct lure.</p>
+    <p><strong>Simple scenario:</strong> A fake careers page for a known company collects resumes and login credentials from targeted applicants.</p>
+    <p><strong>Controls that make sense:</strong> Web filtering, browser isolation, certificate monitoring, brand takedowns, threat intel, patch browsers quickly.</p>
+    </div></article>
+<article class="card searchable"><h3>Misinformation / disinformation / typosquatting</h3><div class="tags"><span class="pill">vector</span><span class="pill">attack surface</span></div><div>
+    <p><strong>Core idea:</strong> The goal is to manipulate trust. Typosquatting uses lookalike domains; disinformation uses false narratives to influence behavior.</p>
+    <p><strong>Simple scenario:</strong> paypaI.example uses a capital I instead of l, while a social media post claims a fake emergency login page is official.</p>
+    <p><strong>Controls that make sense:</strong> Domain monitoring, DMARC/DKIM/SPF, user reporting, brand protection, trusted communication channels.</p>
+    </div></article>
+      </div>
+      <div class="notice">
+        <strong>Social engineering pattern:</strong> attackers use authority, urgency, scarcity, fear, helpfulness, or familiarity. The mitigation is not only “train users.” Strong processes, MFA, verification workflows, and technical controls must support users.
+      </div>
+    </section>
+
+    <section id="vulnerabilities" class="section searchable">
+      <h2>2.3 — Types of vulnerabilities</h2>
+      <p class="lede">A vulnerability is a weakness. It can be a code flaw, design flaw, configuration mistake, outdated system, weak process, or misplaced trust relationship.</p>
+      <div class="grid">
+        <article class="card searchable"><h3>Memory injection</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Code or data is inserted into a legitimate process so malicious behavior appears to come from a trusted process.</p>
+    <p><strong>Example:</strong> Credential theft malware injects into a browser process to read session data.</p>
+    <p><strong>Indicators:</strong> Unexpected child processes, unsigned modules in trusted processes, suspicious memory regions, EDR alerts.</p>
+    <p><strong>Mitigation:</strong> Exploit protection, EDR, application control, least privilege, patching, restrict scripting tools.</p>
+    </div></article>
+<article class="card searchable"><h3>Buffer overflow</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> A program writes more data than a memory buffer can safely hold, causing crash, corruption, or possible code execution.</p>
+    <p><strong>Example:</strong> A network service fails to validate input length and crashes when sent oversized input.</p>
+    <p><strong>Indicators:</strong> Crashes, segmentation faults, exploit protection alerts, unusual service restarts.</p>
+    <p><strong>Mitigation:</strong> Memory-safe languages, bounds checking, ASLR/DEP, fuzz testing, patching, input validation.</p>
+    </div></article>
+<article class="card searchable"><h3>Race condition / TOC-TOU</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Security check and security use happen at different times, allowing the state to change in between.</p>
+    <p><strong>Example:</strong> App checks a file permission, then attacker swaps the file before the app writes to it.</p>
+    <p><strong>Indicators:</strong> Inconsistent logs, rare privilege errors, file changes milliseconds apart, hard-to-reproduce bugs.</p>
+    <p><strong>Mitigation:</strong> Atomic operations, file locks, secure temp-file handling, transaction controls, code review.</p>
+    </div></article>
+<article class="card searchable"><h3>Malicious update</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> A trusted update channel is abused to deliver malicious code or backdoored software.</p>
+    <p><strong>Example:</strong> Supply-chain actor inserts a backdoor into a signed software build.</p>
+    <p><strong>Indicators:</strong> Update from valid vendor but unusual network connections after install, new services, unexpected binaries.</p>
+    <p><strong>Mitigation:</strong> Code signing, reproducible builds, vendor monitoring, staged rollout, EDR, update integrity checks, SBOM.</p>
+    </div></article>
+<article class="card searchable"><h3>Operating system vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Weaknesses in OS kernels, services, drivers, or permission models can allow privilege escalation, remote compromise, or sandbox escape.</p>
+    <p><strong>Example:</strong> Local attacker exploits an unpatched kernel flaw to become admin/root.</p>
+    <p><strong>Indicators:</strong> Privilege escalation, new admin accounts, kernel crash logs, suspicious driver loading.</p>
+    <p><strong>Mitigation:</strong> Patch OS, remove unsupported versions, secure baseline, endpoint protection, least privilege.</p>
+    </div></article>
+<article class="card searchable"><h3>SQL injection</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Untrusted input changes a database query because the app mixes code and data.</p>
+    <p><strong>Example:</strong> Login form treats input as SQL logic and returns data without proper authorization.</p>
+    <p><strong>Indicators:</strong> Database errors in web logs, abnormal query volume, dumped tables, WAF alerts.</p>
+    <p><strong>Mitigation:</strong> Parameterized queries/prepared statements, ORM safely used, input validation, least-privileged DB users, WAF.</p>
+    </div></article>
+<article class="card searchable"><h3>Cross-site scripting (XSS)</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Untrusted input is rendered as executable script in another user&#x27;s browser.</p>
+    <p><strong>Example:</strong> A comment field stores script that steals session data from every admin viewing the page.</p>
+    <p><strong>Indicators:</strong> Suspicious script in user content, CSP violations, user reports of redirects/popups.</p>
+    <p><strong>Mitigation:</strong> Output encoding, content security policy, input validation, framework auto-escaping, secure cookies.</p>
+    </div></article>
+<article class="card searchable"><h3>Hardware vulnerabilities: firmware, EOL, legacy</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Flaws in firmware, embedded controllers, or aging hardware can persist below the OS and may be hard to inspect.</p>
+    <p><strong>Example:</strong> A router with outdated firmware exposes a remote admin vulnerability.</p>
+    <p><strong>Indicators:</strong> Unknown firmware versions, vendor EOL notices, unusual device traffic, no patch path.</p>
+    <p><strong>Mitigation:</strong> Firmware inventory, vendor lifecycle tracking, secure boot, signed firmware, replacement planning.</p>
+    </div></article>
+<article class="card searchable"><h3>Virtualization vulnerabilities: VM escape, resource reuse</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> A guest system may break isolation or recover data left behind from another tenant or VM.</p>
+    <p><strong>Example:</strong> Compromised VM attacks hypervisor interface or reads uncleaned virtual disk blocks.</p>
+    <p><strong>Indicators:</strong> Hypervisor alerts, abnormal inter-VM traffic, unauthorized snapshots, resource spikes.</p>
+    <p><strong>Mitigation:</strong> Patch hypervisor, isolate tenants, wipe resources before reuse, restrict host tools, separate management network.</p>
+    </div></article>
+<article class="card searchable"><h3>Cloud-specific vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Cloud risk often comes from identity, exposed storage, permissive security groups, metadata service abuse, and misconfigured managed services.</p>
+    <p><strong>Example:</strong> Public object storage bucket exposes customer backups because a policy allows anonymous read.</p>
+    <p><strong>Indicators:</strong> CloudTrail anomalies, public exposure findings, impossible travel, unusual role assumption.</p>
+    <p><strong>Mitigation:</strong> Least privilege IAM, CSPM, network controls, encryption, logging, private endpoints, guardrails/IaC scanning.</p>
+    </div></article>
+<article class="card searchable"><h3>Supply-chain vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Weaknesses in third-party software, packages, vendors, CI/CD pipelines, hardware providers, or MSP access become your risk.</p>
+    <p><strong>Example:</strong> Compromised dependency added to a build pipeline steals environment secrets.</p>
+    <p><strong>Indicators:</strong> Unexpected package changes, new maintainer accounts, unusual build outputs, dependency confusion alerts.</p>
+    <p><strong>Mitigation:</strong> SBOM, dependency pinning, package signing, vendor due diligence, CI/CD secret scanning, least-privileged tokens.</p>
+    </div></article>
+<article class="card searchable"><h3>Cryptographic vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Crypto fails when algorithms are weak, protocols are downgraded, keys are reused, randomness is poor, certificates are mishandled, or hashes collide.</p>
+    <p><strong>Example:</strong> Old TLS configuration allows a downgrade to weak ciphers.</p>
+    <p><strong>Indicators:</strong> Deprecated ciphers, certificate warnings, weak hash use, failed audits.</p>
+    <p><strong>Mitigation:</strong> Use modern TLS, strong algorithms, key rotation, certificate management, disable legacy protocols.</p>
+    </div></article>
+<article class="card searchable"><h3>Misconfiguration vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Secure technology becomes insecure when configured poorly: public buckets, permissive firewall rules, default accounts, debug mode, exposed admin panels.</p>
+    <p><strong>Example:</strong> A firewall rule allows 0.0.0.0/0 to a database port.</p>
+    <p><strong>Indicators:</strong> External scan finds admin services; cloud posture tool flags public data; logs show internet probes.</p>
+    <p><strong>Mitigation:</strong> Configuration baselines, drift detection, secure templates, peer review, least privilege, IaC scanning.</p>
+    </div></article>
+<article class="card searchable"><h3>Mobile device vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> Mobile risk includes sideloading, jailbreaking/rooting, malicious apps, risky permissions, OS fragmentation, and lost devices.</p>
+    <p><strong>Example:</strong> User sideloads a fake authenticator app that captures OTP codes.</p>
+    <p><strong>Indicators:</strong> MDM compliance failure, unknown app installs, device integrity failure, suspicious SMS permissions.</p>
+    <p><strong>Mitigation:</strong> MDM/MAM, app allow lists, block jailbroken devices, OS updates, remote wipe, user training.</p>
+    </div></article>
+<article class="card searchable"><h3>Zero-day vulnerabilities</h3><div class="tags"><span class="pill">vulnerability</span></div><div>
+    <p><strong>What it is:</strong> A flaw exploited before a patch or public fix is available. Zero-day does not always mean unstoppable; monitoring and layered controls still matter.</p>
+    <p><strong>Example:</strong> An attacker uses an unknown browser vulnerability against executives before vendor patch release.</p>
+    <p><strong>Indicators:</strong> Unexpected exploitation pattern, vendor advisory, EDR behavior alert, crash telemetry.</p>
+    <p><strong>Mitigation:</strong> Defense in depth, least privilege, segmentation, exploit mitigation, rapid containment, threat intel, virtual patching.</p>
+    </div></article>
+      </div>
+      <div class="callout warning">
+        <strong>Important:</strong> “Vulnerability” is not always a CVE. A public storage bucket, default admin password, or over-permissive IAM role may be just as dangerous even if there is no vendor CVE.
+      </div>
+      <p class="source-line">For web-app risks, OWASP is a strong reference for categories such as injection, security misconfiguration, vulnerable/outdated components, and logging failures <a class="source-pill" href="#src6">source</a>.</p>
+    </section>
+
+    <section id="malware" class="section searchable">
+      <h2>2.4 — Malware indicators</h2>
+      <p class="lede">Malware questions usually ask you to identify the type of malware from behavior: encryption, stealth, keystroke capture, self-spreading, disguised software, or condition-based execution.</p>
+      <div class="grid three">
+        <article class="card searchable"><h3>Ransomware</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Malware or attacker workflow that encrypts systems and/or steals data to extort payment.</p>
+    <p><strong>Possible indicators:</strong> Mass file renames, ransom notes, disabled backups, unusual SMB traffic, shadow copy deletion.</p>
+    <p><strong>Mitigation focus:</strong> Offline/immutable backups, EDR, segmentation, least privilege, email filtering, incident playbooks.</p>
+    </div></article>
+<article class="card searchable"><h3>Trojan</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Malware disguised as legitimate software or embedded in a trusted-looking file.</p>
+    <p><strong>Possible indicators:</strong> New unknown app, suspicious persistence, beaconing to rare domains.</p>
+    <p><strong>Mitigation focus:</strong> Application allow listing, reputation checks, user education, EDR.</p>
+    </div></article>
+<article class="card searchable"><h3>Worm</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Self-propagating malware that spreads without direct user action once inside reach.</p>
+    <p><strong>Possible indicators:</strong> Rapid lateral movement, many hosts scanning same port, repeated exploitation attempts.</p>
+    <p><strong>Mitigation focus:</strong> Patch fast, segment, block east-west traffic, IPS/IDS, disable vulnerable services.</p>
+    </div></article>
+<article class="card searchable"><h3>Spyware</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Software that monitors behavior, collects data, or exfiltrates information without consent.</p>
+    <p><strong>Possible indicators:</strong> Browser data access, screen capture, keylogging indicators, outbound connections.</p>
+    <p><strong>Mitigation focus:</strong> EDR, permission controls, anti-malware, block unauthorized software.</p>
+    </div></article>
+<article class="card searchable"><h3>Bloatware</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Unnecessary preinstalled or bundled software that increases attack surface and performance load.</p>
+    <p><strong>Possible indicators:</strong> Unexpected startup apps, excessive resource use, vulnerable bundled components.</p>
+    <p><strong>Mitigation focus:</strong> Remove unnecessary software, golden images, asset management.</p>
+    </div></article>
+<article class="card searchable"><h3>Virus</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Malware that attaches to files/programs and spreads when executed.</p>
+    <p><strong>Possible indicators:</strong> File integrity changes, infected executables, AV detections.</p>
+    <p><strong>Mitigation focus:</strong> Anti-malware, backups, least privilege, block unsafe downloads.</p>
+    </div></article>
+<article class="card searchable"><h3>Keylogger</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Captures keystrokes or clipboard data to steal passwords and sensitive information.</p>
+    <p><strong>Possible indicators:</strong> Suspicious keyboard hooks, credential theft, unknown processes reading browser data.</p>
+    <p><strong>Mitigation focus:</strong> Password managers, MFA, EDR, secure input controls, least privilege.</p>
+    </div></article>
+<article class="card searchable"><h3>Logic bomb</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Malicious code triggered by a condition such as a date, event, or account removal.</p>
+    <p><strong>Possible indicators:</strong> Dormant scheduled tasks, suspicious scripts triggered by business dates.</p>
+    <p><strong>Mitigation focus:</strong> Code review, change control, least privilege, monitoring scheduled tasks.</p>
+    </div></article>
+<article class="card searchable"><h3>Rootkit</h3><div class="tags"><span class="pill">malware</span></div><div>
+    <p><strong>Meaning:</strong> Malware designed to hide at OS, bootloader, firmware, or kernel level.</p>
+    <p><strong>Possible indicators:</strong> Security tools disabled, hidden files/processes, boot anomalies.</p>
+    <p><strong>Mitigation focus:</strong> Secure boot, EDR, offline scanning, rebuild from trusted media.</p>
+    </div></article>
+      </div>
+    </section>
+
+    <section id="attacks" class="section searchable">
+      <h2>2.4 — Physical, network, application, cryptographic, and password attacks</h2>
+      <p class="lede">The exam often gives a scenario and asks you to classify the attack or pick the best mitigation. Read the evidence first, then label the behavior.</p>
+      <div class="grid">
+        <article class="card searchable"><h3>Physical attacks</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Attackers may physically access systems, clone RFID badges, brute-force locks, tamper with devices, or exploit environmental weaknesses.</p>
+    <p><strong>Indicators:</strong> Tailgating, stolen laptops, cloned access cards, unlocked network closets.</p>
+    <p><strong>Mitigation focus:</strong> Badges, guards, CCTV, access logs, locks, cable control, environmental monitoring.</p>
+    </div></article>
+<article class="card searchable"><h3>Denial of Service / DDoS</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> The goal is availability disruption. Amplified/reflected DDoS abuses third-party systems to multiply traffic toward a victim.</p>
+    <p><strong>Indicators:</strong> Service unreachable, bandwidth saturated, many sources, DNS/NTP reflection traffic.</p>
+    <p><strong>Mitigation focus:</strong> DDoS provider, rate limiting, autoscaling, CDN, Anycast, runbooks, upstream coordination.</p>
+    </div></article>
+<article class="card searchable"><h3>DNS attacks</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> DNS can be spoofed, poisoned, hijacked, tunneled through, or abused with malicious domains.</p>
+    <p><strong>Indicators:</strong> Users redirected, suspicious DNS TXT queries, rare domains, high NXDOMAIN rate.</p>
+    <p><strong>Mitigation focus:</strong> DNSSEC where appropriate, DNS filtering, registrar locks, monitoring, secure resolver config.</p>
+    </div></article>
+<article class="card searchable"><h3>Wireless attacks</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Wireless adds proximity risk: rogue APs, evil twins, deauthentication, weak encryption, Bluetooth abuse, RF jamming.</p>
+    <p><strong>Indicators:</strong> Duplicate SSIDs, clients connecting to rogue AP, repeated deauth frames.</p>
+    <p><strong>Mitigation focus:</strong> WPA3/802.1X, certificate validation, WIDS/WIPS, site surveys, disable unused radios.</p>
+    </div></article>
+<article class="card searchable"><h3>On-path attack</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Attacker intercepts or modifies traffic between parties by ARP spoofing, rogue Wi-Fi, proxy abuse, or routing manipulation.</p>
+    <p><strong>Indicators:</strong> Certificate warnings, ARP table changes, unusual gateway MAC, session anomalies.</p>
+    <p><strong>Mitigation focus:</strong> TLS, HSTS, VPN on untrusted networks, switch protections, certificate pinning where useful.</p>
+    </div></article>
+<article class="card searchable"><h3>Replay / credential replay</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Captured authentication material is reused, especially hashes, tokens, cookies, or old session messages.</p>
+    <p><strong>Indicators:</strong> Same token from new location, pass-the-hash behavior, impossible travel.</p>
+    <p><strong>Mitigation focus:</strong> Nonces/timestamps, short token lifetimes, MFA, channel binding, Kerberos hardening, disable NTLM where possible.</p>
+    </div></article>
+<article class="card searchable"><h3>Malicious code</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Custom or repurposed code exploits a vulnerability, drops malware, or changes business logic.</p>
+    <p><strong>Indicators:</strong> Unusual scripts, untrusted binaries, new persistence, unexpected outbound callbacks.</p>
+    <p><strong>Mitigation focus:</strong> Code signing, application control, EDR, secure SDLC, least privilege.</p>
+    </div></article>
+<article class="card searchable"><h3>Application attacks</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Injection, directory traversal, forgery, privilege escalation, buffer overflow, and replay attacks target app logic and input handling.</p>
+    <p><strong>Indicators:</strong> Unexpected admin actions, web errors, strange URL paths, WAF alerts, unauthorized data access.</p>
+    <p><strong>Mitigation focus:</strong> Secure coding, SAST/DAST, WAF, access control testing, logging, dependency patching.</p>
+    </div></article>
+<article class="card searchable"><h3>Cryptographic attacks</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Downgrade, hash collision, birthday, weak randomness, or poor key handling breaks trust assumptions.</p>
+    <p><strong>Indicators:</strong> Legacy cipher negotiation, duplicate hashes where unique expected, certificate anomalies.</p>
+    <p><strong>Mitigation focus:</strong> Modern protocols, disable weak ciphers, rotate keys, use salted strong hashes, manage certificates.</p>
+    </div></article>
+<article class="card searchable"><h3>Password attacks</h3><div class="tags"><span class="pill">attack</span><span class="pill">indicator</span></div><div>
+    <p><strong>How to understand it:</strong> Password spraying tests common passwords across many accounts; brute force tests many guesses against one or a few accounts.</p>
+    <p><strong>Indicators:</strong> Many users get one or two failures each; account lockouts; login attempts from hosting/VPN nodes.</p>
+    <p><strong>Mitigation focus:</strong> MFA, rate limiting, lockout strategy, banned-password lists, password managers, conditional access.</p>
+    </div></article>
+      </div>
+    </section>
+
+    <section id="iocs" class="section searchable">
+      <h2>2.4 — Indicators of malicious activity</h2>
+      <p class="lede">An indicator is not proof by itself. It is a clue that must be validated with logs, timelines, identity context, asset context, and known-good baselines. NIST incident response guidance emphasizes preparation, detection, response, recovery, and continuous improvement across cybersecurity risk management <a class="source-pill" href="#src3">source</a>.</p>
+      <div class="grid three">
+        <article class="card searchable"><h3>Account lockout</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Many failed logins may indicate brute force, password spraying, user error, or a broken service account. Context matters: one account repeatedly failing is different from hundreds of accounts failing once.</p></div></article>
+<article class="card searchable"><h3>Concurrent session usage</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Same user active from two distant devices or protocols may indicate stolen token, shared credentials, or session hijacking.</p></div></article>
+<article class="card searchable"><h3>Blocked content</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Repeated blocks can show a control doing its job, but repeated attempts from one host may show infection or user targeting.</p></div></article>
+<article class="card searchable"><h3>Impossible travel</h3><div class="tags"><span class="pill">indicator</span></div><div><p>A user appears to log in from locations that cannot be physically traveled between in the time window. Cloud proxy/VPN exceptions must be considered.</p></div></article>
+<article class="card searchable"><h3>Resource consumption</h3><div class="tags"><span class="pill">indicator</span></div><div><p>CPU, memory, disk, or network spikes can indicate crypto-mining, malware encryption, data staging, runaway processes, or DDoS.</p></div></article>
+<article class="card searchable"><h3>Resource inaccessibility</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Users cannot access files, apps, DNS, or identity services. This may indicate ransomware, DDoS, misconfiguration, or dependency failure.</p></div></article>
+<article class="card searchable"><h3>Out-of-cycle logging</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Unexpected logging at unusual times can reveal suspicious admin activity, scheduled tasks, or attackers testing persistence.</p></div></article>
+<article class="card searchable"><h3>Published/documented exposure</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Credentials, data, or vulnerabilities appear on paste sites, forums, advisories, or threat-intelligence feeds.</p></div></article>
+<article class="card searchable"><h3>Missing logs</h3><div class="tags"><span class="pill">indicator</span></div><div><p>Gaps in logs are a major indicator: attackers may disable auditing, clear logs, bypass collection, or attack the logging pipeline.</p></div></article>
+      </div>
+      <div class="callout">
+        <strong>Analyst question to ask every time:</strong> “Is this impossible, unusual, unauthorized, or merely unexplained?” Good analysts separate anomalies from confirmed incidents.
+      </div>
+    </section>
+
+    <section id="mitigations" class="section searchable">
+      <h2>2.5 — Mitigation techniques</h2>
+      <p class="lede">Mitigations reduce likelihood, impact, or detection/response time. The best answer in a scenario is usually the control that breaks the attacker’s specific path with the least unnecessary business damage.</p>
+      <div class="grid">
+        <article class="card searchable"><h3>Segmentation</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Divide the environment into zones so compromise of one area does not mean compromise of everything.</p>
+    <p><strong>Example:</strong> User VLAN cannot directly reach database subnet; production and development are separated; OT and IT are separated.</p>
+    <p><strong>Why it works:</strong> Ransomware and worms lose speed; privilege escalation paths become harder.</p>
+    </div></article>
+<article class="card searchable"><h3>Access control: ACLs and permissions</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Define who or what can access a resource and what actions are allowed.</p>
+    <p><strong>Example:</strong> Finance share is limited to finance group; service account can read only one database.</p>
+    <p><strong>Why it works:</strong> Excessive permissions and lateral movement are reduced.</p>
+    </div></article>
+<article class="card searchable"><h3>Application allow list</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Only approved applications, scripts, or binaries can run.</p>
+    <p><strong>Example:</strong> Workstations run signed business apps only; unknown EXE from downloads is blocked.</p>
+    <p><strong>Why it works:</strong> Blocks many malware and living-off-the-land chains when configured carefully.</p>
+    </div></article>
+<article class="card searchable"><h3>Isolation</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Separate risky systems, users, browsers, files, or workloads from sensitive assets.</p>
+    <p><strong>Example:</strong> Browser isolation for unknown websites; quarantine infected endpoint; sandbox suspicious attachment.</p>
+    <p><strong>Why it works:</strong> Contains damage and lets analysts inspect safely.</p>
+    </div></article>
+<article class="card searchable"><h3>Patching</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Apply vendor updates to remove known vulnerabilities. Prioritize by exploitation, exposure, criticality, and business context, not CVSS alone.</p>
+    <p><strong>Example:</strong> Patch internet-facing VPN named in KEV before a low-risk internal desktop bug.</p>
+    <p><strong>Why it works:</strong> Removes known paths used by opportunistic and advanced attackers.</p>
+    </div></article>
+<article class="card searchable"><h3>Encryption</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Protect data confidentiality and integrity in transit and at rest; manage keys carefully.</p>
+    <p><strong>Example:</strong> TLS for web apps; full-disk encryption on laptops; encrypted backups.</p>
+    <p><strong>Why it works:</strong> Reduces impact of lost devices, interception, and data theft.</p>
+    </div></article>
+<article class="card searchable"><h3>Monitoring</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Collect, correlate, and alert on meaningful events across identity, endpoint, network, cloud, and applications.</p>
+    <p><strong>Example:</strong> SIEM alerts on impossible travel plus mailbox rule creation plus mass download.</p>
+    <p><strong>Why it works:</strong> Turns attacks into detectable incidents before business impact grows.</p>
+    </div></article>
+<article class="card searchable"><h3>Least privilege</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Grant only the access required, only for as long as required.</p>
+    <p><strong>Example:</strong> Admin rights are separate from daily accounts; JIT access expires automatically.</p>
+    <p><strong>Why it works:</strong> Limits blast radius and reduces value of stolen accounts.</p>
+    </div></article>
+<article class="card searchable"><h3>Configuration enforcement</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Continuously enforce approved baselines and detect drift.</p>
+    <p><strong>Example:</strong> Cloud policy prevents public storage buckets; GPO blocks insecure protocols.</p>
+    <p><strong>Why it works:</strong> Prevents repeated misconfigurations and reduces manual errors.</p>
+    </div></article>
+<article class="card searchable"><h3>Decommissioning</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Remove, sanitize, or retire assets that no longer have a business purpose or support path.</p>
+    <p><strong>Example:</strong> Old public test server is shut down and DNS removed; disks are sanitized.</p>
+    <p><strong>Why it works:</strong> Eliminates forgotten attack surface.</p>
+    </div></article>
+<article class="card searchable"><h3>Hardening techniques</h3><div class="tags"><span class="pill">mitigation</span></div><div>
+    <p><strong>Purpose:</strong> Reduce attack surface by secure configuration: endpoint protection, host firewall, HIPS, disabling ports/protocols, changing default passwords, removing unnecessary software.</p>
+    <p><strong>Example:</strong> Disable SMBv1, remove local admin reuse, block inbound workstation connections.</p>
+    <p><strong>Why it works:</strong> Makes exploitation harder and reduces noise in monitoring.</p>
+    </div></article>
+      </div>
+      <p class="source-line">CIS Controls are a useful way to organize practical safeguards such as inventory, secure configuration, access control, malware defenses, logging, and vulnerability management <a class="source-pill" href="#src10">source</a>.</p>
+    </section>
+
+    <section id="hardening" class="section searchable">
+      <h2>Hardening map: attack → best controls</h2>
+      <p class="lede">Hardening is the process of making a system harder to exploit by reducing unnecessary functionality and enforcing secure defaults.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Problem</th><th>Hardening action</th><th>Why it helps</th></tr></thead>
+          <tbody>
+            <tr><td>Open ports / exposed services</td><td>Disable unused services, host firewall, network ACLs</td><td>Removes reachable attack paths.</td></tr>
+            <tr><td>Default passwords</td><td>Change default credentials, enforce unique secrets</td><td>Stops automated compromise and botnet enrollment.</td></tr>
+            <tr><td>Unnecessary software</td><td>Remove bloatware and unused packages</td><td>Reduces vulnerable components and patch burden.</td></tr>
+            <tr><td>Malware execution</td><td>Endpoint protection, EDR, application allow list</td><td>Blocks or detects malicious behavior.</td></tr>
+            <tr><td>Weak local network trust</td><td>Segmentation, host firewall, least privilege</td><td>Limits lateral movement after initial compromise.</td></tr>
+            <tr><td>Configuration drift</td><td>Configuration enforcement, baseline scanning, IaC review</td><td>Prevents systems from silently becoming insecure.</td></tr>
+            <tr><td>Data exposure</td><td>Encryption, access control, DLP, logging</td><td>Protects confidentiality and creates evidence.</td></tr>
+            <tr><td>Legacy/EOL systems</td><td>Decommission, isolate, virtual patch, replacement plan</td><td>Controls risk where normal patching is impossible.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="notice">
+        <strong>Practical priority order:</strong> know assets → remove internet exposure → fix exploited vulnerabilities → enforce MFA → least privilege → backups → monitor → test response.
+      </div>
+    </section>
+
+    <section id="cases" class="section searchable">
+      <h2>Real-world case studies mapped to Domain 2</h2>
+      <p class="lede">These cases help convert abstract exam terms into real cyber incidents. For Security+, you do not need every technical detail; you need to map actor, vector, vulnerability, indicator, and mitigation.</p>
+      <div class="grid">
+        <article class="card searchable"><h3>SolarWinds Orion supply-chain compromise</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: nation-state/APT. Vector: trusted software update. Vulnerability class: malicious update / supply chain. Indicator: unusual network callbacks, identity abuse, persistence. Mitigation lesson: do not blindly trust signed updates; monitor vendor software behavior, restrict vendor products, and maintain incident response capability.</p><p class="source-line">Reference: <a class="source-pill" href="#src15">source</a></p></div></article>
+<article class="card searchable"><h3>MOVEit Transfer exploitation by CL0P</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: organized crime/extortion. Vector: internet-facing managed file transfer app. Vulnerability class: zero-day SQL injection. Indicator: web shell/malware, data theft, unusual file access. Mitigation lesson: internet-facing apps need asset inventory, emergency patching, logging, and breach notification workflow.</p><p class="source-line">Reference: <a class="source-pill" href="#src13">source</a></p></div></article>
+<article class="card searchable"><h3>Apache Log4j / Log4Shell</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: many actors from scanners to criminal groups. Vector: vulnerable software dependency. Vulnerability class: remote code execution in a widely used logging library. Indicator: exploit strings in logs, callbacks to attacker infrastructure, crypto-mining, web shell attempts. Mitigation lesson: know software dependencies, use SBOM/SCA, patch fast, and monitor after patching.</p><p class="source-line">Reference: <a class="source-pill" href="#src14">source</a></p></div></article>
+<article class="card searchable"><h3>Colonial Pipeline ransomware</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: ransomware crime group. Vector: credential/access abuse. Vulnerability class: weak identity and remote access control. Indicator: ransomware activity, operational disruption, extortion communication. Mitigation lesson: MFA, tested backups, segmentation, and incident response matter for business continuity.</p><p class="source-line">Reference: <a class="source-pill" href="#src16">source</a></p></div></article>
+<article class="card searchable"><h3>Equifax data breach</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: external attackers. Vector: vulnerable web application. Vulnerability class: unpatched Apache Struts and weak vulnerability management. Indicator: abnormal database access/exfiltration. Mitigation lesson: patch SLAs, inventory, certificate/monitoring maintenance, and segmentation prevent known-vulnerability breaches.</p><p class="source-line">Reference: <a class="source-pill" href="#src17">source</a></p></div></article>
+<article class="card searchable"><h3>Mirai IoT botnet</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: criminal/opportunistic. Vector: internet-exposed IoT using default credentials. Vulnerability class: default credentials and poor device hardening. Indicator: device scanning and DDoS traffic. Mitigation lesson: change defaults, restrict admin access, patch firmware, and segment IoT.</p><p class="source-line">Reference: <a class="source-pill" href="#src18">source</a></p></div></article>
+<article class="card searchable"><h3>Scattered Spider social engineering</h3><div class="tags"><span class="pill">case study</span></div><div><p>Threat actor: organized cybercrime with strong social engineering. Vector: help desk, SIM swap, push bombing, impersonation. Vulnerability class: process weakness around identity proofing. Indicator: MFA fatigue, new device enrollment, help-desk reset anomalies. Mitigation lesson: verification workflows, phishing-resistant MFA, and support-team training are technical controls plus process controls.</p><p class="source-line">Reference: <a class="source-pill" href="#src19">source</a></p></div></article>
+      </div>
+    </section>
+
+    <section id="traps" class="section searchable">
+      <h2>Common exam traps</h2>
+      <p class="lede">These are the distinctions that usually decide close multiple-choice questions.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Trap</th><th>Correct way to think</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Threat actor vs motivation</strong></td><td>Actor is who; motivation is why. Example: organized crime is the actor; financial gain is the motivation.</td></tr>
+<tr><td><strong>Threat vector vs vulnerability</strong></td><td>Vector is the path used to reach the target; vulnerability is the weakness exploited. Email is a vector; weak macro policy is a vulnerability.</td></tr>
+<tr><td><strong>Indicator vs attack</strong></td><td>Indicator is evidence after or during activity. Account lockout is an indicator; password spraying is an attack.</td></tr>
+<tr><td><strong>CVSS vs risk</strong></td><td>CVSS measures technical severity. Real risk also includes exploit activity, asset exposure, business impact, and compensating controls.</td></tr>
+<tr><td><strong>Zero-day vs unpatched known vulnerability</strong></td><td>Zero-day means no available fix at the time of exploitation. A five-year-old unpatched CVE is not a zero-day.</td></tr>
+<tr><td><strong>DDoS amplified vs reflected</strong></td><td>Reflected means traffic bounces off third parties; amplified means small request produces larger response. Many attacks are both.</td></tr>
+<tr><td><strong>On-path vs replay</strong></td><td>On-path intercepts active traffic. Replay reuses captured authentication or messages later.</td></tr>
+<tr><td><strong>Misconfiguration vs vulnerability</strong></td><td>A misconfiguration is often self-created exposure, not necessarily a vendor bug.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="quiz" class="section searchable">
+      <h2>Quick practice questions</h2>
+      <p class="lede">Click an answer to reveal the explanation. These are original practice questions for learning, not exam dumps.</p>
+      <div class="grid">
+        
+    <div class="quiz-card searchable" data-answer="1">
+      <h3>Q1. An attacker sends one common password attempt to hundreds of accounts. What is this?</h3>
+      <div class="choices"><button class="choice" data-q="1" data-c="0" data-answer="1">Brute force</button><button class="choice" data-q="1" data-c="1" data-answer="1">Password spraying</button><button class="choice" data-q="1" data-c="2" data-answer="1">Collision attack</button><button class="choice" data-q="1" data-c="3" data-answer="1">On-path attack</button></div>
+      <p class="explanation" id="exp1"><strong>Explanation:</strong> Password spraying spreads a common guess across many accounts to avoid lockouts.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="1">
+      <h3>Q2. A user logs in from Toronto and five minutes later from Singapore. Which indicator fits best?</h3>
+      <div class="choices"><button class="choice" data-q="2" data-c="0" data-answer="1">Blocked content</button><button class="choice" data-q="2" data-c="1" data-answer="1">Impossible travel</button><button class="choice" data-q="2" data-c="2" data-answer="1">Resource consumption</button><button class="choice" data-q="2" data-c="3" data-answer="1">Published exposure</button></div>
+      <p class="explanation" id="exp2"><strong>Explanation:</strong> Impossible travel indicates two locations are not physically plausible in the time window.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q3. A vendor&#x27;s signed update installs a backdoor. What category is strongest?</h3>
+      <div class="choices"><button class="choice" data-q="3" data-c="0" data-answer="0">Malicious update / supply chain</button><button class="choice" data-q="3" data-c="1" data-answer="0">Wireless attack</button><button class="choice" data-q="3" data-c="2" data-answer="0">Birthday attack</button><button class="choice" data-q="3" data-c="3" data-answer="0">Bloatware</button></div>
+      <p class="explanation" id="exp3"><strong>Explanation:</strong> The trust relationship and update channel were abused.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="1">
+      <h3>Q4. Which mitigation most directly limits ransomware spreading between departments?</h3>
+      <div class="choices"><button class="choice" data-q="4" data-c="0" data-answer="1">Compression</button><button class="choice" data-q="4" data-c="1" data-answer="1">Segmentation</button><button class="choice" data-q="4" data-c="2" data-answer="1">Open ports</button><button class="choice" data-q="4" data-c="3" data-answer="1">Typosquatting</button></div>
+      <p class="explanation" id="exp4"><strong>Explanation:</strong> Segmentation reduces lateral movement and blast radius.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="1">
+      <h3>Q5. A web app concatenates user input into SQL queries. Which mitigation is best?</h3>
+      <div class="choices"><button class="choice" data-q="5" data-c="0" data-answer="1">Disable DNS</button><button class="choice" data-q="5" data-c="1" data-answer="1">Prepared statements</button><button class="choice" data-q="5" data-c="2" data-answer="1">RF shielding</button><button class="choice" data-q="5" data-c="3" data-answer="1">Longer passwords only</button></div>
+      <p class="explanation" id="exp5"><strong>Explanation:</strong> Parameterized queries separate code from data.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q6. An attacker intercepts traffic on a rogue Wi-Fi network. What attack type is this?</h3>
+      <div class="choices"><button class="choice" data-q="6" data-c="0" data-answer="0">On-path</button><button class="choice" data-q="6" data-c="1" data-answer="0">Logic bomb</button><button class="choice" data-q="6" data-c="2" data-answer="0">Rootkit</button><button class="choice" data-q="6" data-c="3" data-answer="0">Supply chain</button></div>
+      <p class="explanation" id="exp6"><strong>Explanation:</strong> On-path attacks intercept traffic between parties.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="1">
+      <h3>Q7. A flaw is exploited before the vendor releases a patch. What is it called?</h3>
+      <div class="choices"><button class="choice" data-q="7" data-c="0" data-answer="1">Legacy flaw</button><button class="choice" data-q="7" data-c="1" data-answer="1">Zero-day</button><button class="choice" data-q="7" data-c="2" data-answer="1">Bloatware</button><button class="choice" data-q="7" data-c="3" data-answer="1">Race condition</button></div>
+      <p class="explanation" id="exp7"><strong>Explanation:</strong> Zero-day refers to exploitation before a fix is available.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q8. A help desk is tricked into resetting MFA for an attacker. What vector dominates?</h3>
+      <div class="choices"><button class="choice" data-q="8" data-c="0" data-answer="0">Social engineering</button><button class="choice" data-q="8" data-c="1" data-answer="0">Buffer overflow</button><button class="choice" data-q="8" data-c="2" data-answer="0">Hash collision</button><button class="choice" data-q="8" data-c="3" data-answer="0">DNS amplification</button></div>
+      <p class="explanation" id="exp8"><strong>Explanation:</strong> The weak point is the human/process interaction.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="1">
+      <h3>Q9. What is the main difference between CVSS and business risk?</h3>
+      <div class="choices"><button class="choice" data-q="9" data-c="0" data-answer="1">They are identical</button><button class="choice" data-q="9" data-c="1" data-answer="1">CVSS is technical severity; risk includes context</button><button class="choice" data-q="9" data-c="2" data-answer="1">CVSS applies only to malware</button><button class="choice" data-q="9" data-c="3" data-answer="1">Risk ignores asset value</button></div>
+      <p class="explanation" id="exp9"><strong>Explanation:</strong> Risk requires exposure, exploitation, impact, and controls.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q10. A mobile user installs an app outside the official store. Which topic fits?</h3>
+      <div class="choices"><button class="choice" data-q="10" data-c="0" data-answer="0">Sideloading</button><button class="choice" data-q="10" data-c="1" data-answer="0">DDoS</button><button class="choice" data-q="10" data-c="2" data-answer="0">Birthday attack</button><button class="choice" data-q="10" data-c="3" data-answer="0">VM escape</button></div>
+      <p class="explanation" id="exp10"><strong>Explanation:</strong> Sideloading bypasses official app-store controls.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q11. Which is a typical rootkit goal?</h3>
+      <div class="choices"><button class="choice" data-q="11" data-c="0" data-answer="0">Hide malicious activity</button><button class="choice" data-q="11" data-c="1" data-answer="0">Send invoices</button><button class="choice" data-q="11" data-c="2" data-answer="0">Increase battery life</button><button class="choice" data-q="11" data-c="3" data-answer="0">Improve TLS</button></div>
+      <p class="explanation" id="exp11"><strong>Explanation:</strong> Rootkits are designed to hide at deep system levels.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q12. A public storage bucket exposes customer backups. What vulnerability type is most likely?</h3>
+      <div class="choices"><button class="choice" data-q="12" data-c="0" data-answer="0">Misconfiguration</button><button class="choice" data-q="12" data-c="1" data-answer="0">Buffer overflow</button><button class="choice" data-q="12" data-c="2" data-answer="0">Virus</button><button class="choice" data-q="12" data-c="3" data-answer="0">RFID cloning</button></div>
+      <p class="explanation" id="exp12"><strong>Explanation:</strong> The cloud control was configured insecurely.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q13. A guest VM breaks isolation and affects the host. What is this?</h3>
+      <div class="choices"><button class="choice" data-q="13" data-c="0" data-answer="0">VM escape</button><button class="choice" data-q="13" data-c="1" data-answer="0">Smishing</button><button class="choice" data-q="13" data-c="2" data-answer="0">Pass-the-hash</button><button class="choice" data-q="13" data-c="3" data-answer="0">Bloatware</button></div>
+      <p class="explanation" id="exp13"><strong>Explanation:</strong> VM escape crosses the guest-to-host boundary.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q14. Repeated DNS TXT queries to rare domains could indicate what?</h3>
+      <div class="choices"><button class="choice" data-q="14" data-c="0" data-answer="0">DNS tunneling or malware C2</button><button class="choice" data-q="14" data-c="1" data-answer="0">Clean baseline</button><button class="choice" data-q="14" data-c="2" data-answer="0">Physical brute force</button><button class="choice" data-q="14" data-c="3" data-answer="0">RFID cloning</button></div>
+      <p class="explanation" id="exp14"><strong>Explanation:</strong> DNS is often abused for command-and-control or exfiltration.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q15. Which actor is most associated with espionage and long-term stealth?</h3>
+      <div class="choices"><button class="choice" data-q="15" data-c="0" data-answer="0">Nation-state</button><button class="choice" data-q="15" data-c="1" data-answer="0">Unskilled attacker</button><button class="choice" data-q="15" data-c="2" data-answer="0">Shadow IT</button><button class="choice" data-q="15" data-c="3" data-answer="0">Accidental user</button></div>
+      <p class="explanation" id="exp15"><strong>Explanation:</strong> Nation-states commonly pursue espionage with high resources.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q16. Which mitigation removes forgotten attack surface?</h3>
+      <div class="choices"><button class="choice" data-q="16" data-c="0" data-answer="0">Decommissioning</button><button class="choice" data-q="16" data-c="1" data-answer="0">Smishing</button><button class="choice" data-q="16" data-c="2" data-answer="0">Open service ports</button><button class="choice" data-q="16" data-c="3" data-answer="0">Pretexting</button></div>
+      <p class="explanation" id="exp16"><strong>Explanation:</strong> Retiring old assets eliminates unused exposure.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q17. A fake domain mimics a brand with a misspelling. What is this?</h3>
+      <div class="choices"><button class="choice" data-q="17" data-c="0" data-answer="0">Typosquatting</button><button class="choice" data-q="17" data-c="1" data-answer="0">VM escape</button><button class="choice" data-q="17" data-c="2" data-answer="0">Key stretching</button><button class="choice" data-q="17" data-c="3" data-answer="0">Race condition</button></div>
+      <p class="explanation" id="exp17"><strong>Explanation:</strong> Typosquatting uses confusingly similar domains.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q18. A small DNS request causes a much larger response to the victim. What describes it?</h3>
+      <div class="choices"><button class="choice" data-q="18" data-c="0" data-answer="0">Amplified DDoS</button><button class="choice" data-q="18" data-c="1" data-answer="0">Sideloading</button><button class="choice" data-q="18" data-c="2" data-answer="0">Buffer overflow</button><button class="choice" data-q="18" data-c="3" data-answer="0">Insider threat</button></div>
+      <p class="explanation" id="exp18"><strong>Explanation:</strong> Amplification multiplies traffic volume.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q19. What control best prevents unnecessary admin rights from increasing blast radius?</h3>
+      <div class="choices"><button class="choice" data-q="19" data-c="0" data-answer="0">Least privilege</button><button class="choice" data-q="19" data-c="1" data-answer="0">Collision</button><button class="choice" data-q="19" data-c="2" data-answer="0">Bloatware</button><button class="choice" data-q="19" data-c="3" data-answer="0">Vishing</button></div>
+      <p class="explanation" id="exp19"><strong>Explanation:</strong> Least privilege limits what a compromised account can do.</p>
+    </div>
+    
+
+    <div class="quiz-card searchable" data-answer="0">
+      <h3>Q20. Which indicator is suspicious because attackers may try to hide traces?</h3>
+      <div class="choices"><button class="choice" data-q="20" data-c="0" data-answer="0">Missing logs</button><button class="choice" data-q="20" data-c="1" data-answer="0">Approved maintenance</button><button class="choice" data-q="20" data-c="2" data-answer="0">Normal backups</button><button class="choice" data-q="20" data-c="3" data-answer="0">Updated inventory</button></div>
+      <p class="explanation" id="exp20"><strong>Explanation:</strong> Log gaps can indicate tampering or disabled collection.</p>
+    </div>
+    
+      </div>
+    </section>
+
+    <section id="glossary" class="section searchable">
+      <h2>Mini glossary</h2>
+      <p class="lede">Use this for fast recall before doing practice questions.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Term</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td><strong>ACL</strong></td><td>Access control list; rules allowing or denying traffic or resource access.</td></tr>
+<tr><td><strong>APT</strong></td><td>Advanced persistent threat; usually a highly resourced and persistent actor.</td></tr>
+<tr><td><strong>Attack surface</strong></td><td>All reachable points where an attacker could interact with a system.</td></tr>
+<tr><td><strong>BEC</strong></td><td>Business email compromise; fraud using email/account impersonation.</td></tr>
+<tr><td><strong>CVE</strong></td><td>Common Vulnerabilities and Exposures identifier for a publicly known vulnerability.</td></tr>
+<tr><td><strong>CVSS</strong></td><td>Common Vulnerability Scoring System; severity scoring method from 0 to 10.</td></tr>
+<tr><td><strong>DLP</strong></td><td>Data loss prevention; tools/processes that prevent sensitive data leakage.</td></tr>
+<tr><td><strong>EDR</strong></td><td>Endpoint detection and response; endpoint telemetry, detection, and response tooling.</td></tr>
+<tr><td><strong>IOC</strong></td><td>Indicator of compromise; evidence suggesting malicious activity or compromise.</td></tr>
+<tr><td><strong>KEV</strong></td><td>Known Exploited Vulnerabilities; CISA list of vulnerabilities exploited in the wild.</td></tr>
+<tr><td><strong>MFA</strong></td><td>Multi-factor authentication; using multiple proof types for authentication.</td></tr>
+<tr><td><strong>MSP</strong></td><td>Managed service provider; third party that manages customer systems/services.</td></tr>
+<tr><td><strong>RCE</strong></td><td>Remote code execution; attacker can run code on a remote system.</td></tr>
+<tr><td><strong>SBOM</strong></td><td>Software bill of materials; inventory of software components/dependencies.</td></tr>
+<tr><td><strong>SIEM</strong></td><td>Security information and event management; log collection/correlation platform.</td></tr>
+<tr><td><strong>TOC/TOU</strong></td><td>Time-of-check / time-of-use race condition.</td></tr>
+<tr><td><strong>WAF</strong></td><td>Web application firewall; filters and monitors HTTP application traffic.</td></tr>
+<tr><td><strong>XDR</strong></td><td>Extended detection and response; detection across endpoint, identity, cloud, email, and network.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="sources" class="section searchable">
+      <h2>Research sources used</h2>
+      <p class="lede">These are high-quality public references used to build this page. Start with the official CompTIA objectives, then use NIST/CISA/MITRE/OWASP/CIS/NVD to deepen understanding.</p>
+      <ol class="ref-list">
+        <li id="src1"><a href="https://assets.ctfassets.net/82ripq7fjls2/6TYWUym0Nudqa8nGEnegjG/0f9b974d3b1837fe85ab8e6553f4d623/CompTIA-Security-Plus-SY0-701-Exam-Objectives.pdf" target="_blank" rel="noopener">CompTIA Security+ SY0-701 Exam Objectives</a><span>Official domain weighting and objective keywords for Domain 2.</span></li>
+<li id="src2"><a href="https://nvlpubs.nist.gov/nistpubs/CSWP/NIST.CSWP.29.pdf" target="_blank" rel="noopener">NIST Cybersecurity Framework 2.0</a><span>Govern, Identify, Protect, Detect, Respond, Recover risk-management model.</span></li>
+<li id="src3"><a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf" target="_blank" rel="noopener">NIST SP 800-61 Rev. 3</a><span>Incident response recommendations and integration with CSF 2.0.</span></li>
+<li id="src4"><a href="https://attack.mitre.org/matrices/enterprise/" target="_blank" rel="noopener">MITRE ATT&amp;CK Enterprise Matrix</a><span>Common language for adversary tactics, techniques, and procedures.</span></li>
+<li id="src5"><a href="https://attack.mitre.org/tactics/" target="_blank" rel="noopener">MITRE ATT&amp;CK Enterprise Tactics</a><span>Tactics describe adversary goals: the why behind techniques.</span></li>
+<li id="src6"><a href="https://owasp.org/Top10/2021/" target="_blank" rel="noopener">OWASP Top 10:2021</a><span>Standard awareness document for major web application risks.</span></li>
+<li id="src7"><a href="https://nvd.nist.gov/vuln-metrics/cvss" target="_blank" rel="noopener">NVD Vulnerability Metrics / CVSS</a><span>CVSS is a severity scoring method, not the same as business risk.</span></li>
+<li id="src8"><a href="https://nvd.nist.gov/" target="_blank" rel="noopener">NVD Home</a><span>U.S. government vulnerability-management repository using SCAP data.</span></li>
+<li id="src9"><a href="https://www.cisa.gov/known-exploited-vulnerabilities-catalog" target="_blank" rel="noopener">CISA Known Exploited Vulnerabilities Catalog</a><span>Catalog of vulnerabilities known to be exploited in the wild.</span></li>
+<li id="src10"><a href="https://www.cisecurity.org/controls/cis-controls-list" target="_blank" rel="noopener">CIS Critical Security Controls v8.1</a><span>Prioritized best-practice safeguards for strengthening security posture.</span></li>
+<li id="src11"><a href="https://www.cisa.gov/stopransomware/ransomware-guide" target="_blank" rel="noopener">CISA StopRansomware Guide</a><span>Ransomware prevention and response guidance.</span></li>
+<li id="src12"><a href="https://www.cisa.gov/shields-guidance-organizations" target="_blank" rel="noopener">CISA Shields Up Guidance</a><span>Organizational resilience practices, including tested backups.</span></li>
+<li id="src13"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-158a" target="_blank" rel="noopener">CISA/FBI MOVEit CL0P Advisory AA23-158A</a><span>Real-world zero-day exploitation and data theft/extortion scenario.</span></li>
+<li id="src14"><a href="https://www.cisa.gov/news-events/news/apache-log4j-vulnerability-guidance" target="_blank" rel="noopener">CISA Apache Log4j Guidance</a><span>Real-world vulnerable component and software supply-chain lesson.</span></li>
+<li id="src15"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa20-352a" target="_blank" rel="noopener">CISA SolarWinds Advisory AA20-352A</a><span>Real-world software supply-chain and malicious-update case.</span></li>
+<li id="src16"><a href="https://www.energy.gov/ceser/colonial-pipeline-cyber-incident" target="_blank" rel="noopener">U.S. DOE Colonial Pipeline Cyber Incident</a><span>Ransomware incident affecting critical infrastructure operations.</span></li>
+<li id="src17"><a href="https://www.ftc.gov/enforcement/refunds/equifax-data-breach-settlement" target="_blank" rel="noopener">FTC Equifax Data Breach Settlement</a><span>Large breach caused by poor vulnerability and patch management.</span></li>
+<li id="src18"><a href="https://www.cisa.gov/news-events/alerts/2016/10/14/heightened-ddos-threat-posed-mirai-and-other-botnets" target="_blank" rel="noopener">CISA Mirai DDoS Alert</a><span>IoT botnet and default-credential DDoS lesson.</span></li>
+<li id="src19"><a href="https://www.cisa.gov/news-events/cybersecurity-advisories/aa23-320a" target="_blank" rel="noopener">CISA Scattered Spider Advisory AA23-320A</a><span>Social engineering, push bombing, and SIM-swap attacker behavior.</span></li>
+<li id="src20"><a href="https://docs.github.com/pages/quickstart" target="_blank" rel="noopener">GitHub Pages Quickstart</a><span>How to publish a static page from a GitHub repository.</span></li>
+      </ol>
+    </section>
+
+    <section id="github" class="section searchable">
+      <h2>How to host this single file on GitHub Pages</h2>
+      <p class="lede">This file is standalone: no external CSS, no build system, and no backend required.</p>
+      <div class="checklist">
+        <div class="checkitem"><strong>1. Rename file</strong><br>Rename this file to <span class="kbd">index.html</span>.</div>
+        <div class="checkitem"><strong>2. Create repo</strong><br>Create a GitHub repository, for example <span class="kbd">secplus-section2-guide</span>.</div>
+        <div class="checkitem"><strong>3. Upload</strong><br>Upload <span class="kbd">index.html</span> to the root of the repository and commit.</div>
+        <div class="checkitem"><strong>4. Enable Pages</strong><br>Go to <span class="kbd">Settings → Pages → Deploy from a branch</span>, choose <span class="kbd">main</span> and root, then save.</div>
+      </div>
+      <p class="source-line">GitHub’s official docs say GitHub Pages can deploy from a branch and that the entry file can be <span class="kbd">index.html</span> <a class="source-pill" href="#src20">source</a>.</p>
+      <p class="footer-note">Educational note: use this guide only for authorized learning and defensive security. Do not test systems that you do not own or have explicit permission to assess.</p>
+    </section>
+  </main>
+</div>
+
+<script>
+const search = document.getElementById('search');
+search.addEventListener('input', () => {
+  const q = search.value.trim().toLowerCase();
+  document.querySelectorAll('.searchable').forEach(el => {
+    const hit = !q || el.innerText.toLowerCase().includes(q);
+    el.classList.toggle('hidden', !hit);
+  });
+});
+document.getElementById('themeBtn').addEventListener('click', () => {
+  document.body.classList.toggle('light');
+  localStorage.setItem('theme', document.body.classList.contains('light') ? 'light' : 'dark');
+});
+if (localStorage.getItem('theme') === 'light') document.body.classList.add('light');
+
+document.querySelectorAll('.choice').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const q = btn.dataset.q;
+    const answer = btn.dataset.answer;
+    document.querySelectorAll(`.choice[data-q="${q}"]`).forEach(b => {
+      b.disabled = true;
+      if (b.dataset.c === answer) b.classList.add('correct');
+    });
+    if (btn.dataset.c !== answer) btn.classList.add('wrong');
+    const exp = document.getElementById('exp' + q);
+    if (exp) exp.style.display = 'block';
+  });
+});
+
+const progress = document.getElementById('progress');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement;
+  const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+  progress.style.width = Math.max(0, Math.min(100, scrolled * 100)) + '%';
+});
+</script>
+</body>
+</html>
